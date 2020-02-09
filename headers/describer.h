@@ -10,5 +10,9 @@
 #define APPEAR 2
 
 std::string describeRoom(const Room& room, const Player& player, int enter);
+std::string describeUnknownCommand();
+std::string describeTurn(int dir);
+std::string describeUnknownAbsolute(int dir);
+std::string describeNoDoor(int dir);
 
 #endif // DESCRIBER_H_INCLUDED

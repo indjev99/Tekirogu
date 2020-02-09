@@ -2,25 +2,30 @@
 
 #include "../headers/map.h"
 #include "../headers/player.h"
-#include "../headers/describer.h"
 #include "../headers/command_parser.h"
+#include "../headers/command_executer.h"
 #include "../headers/randomizer.h"
 
-Map playMap;
+Map gameMap;
+Player player;
+Room* room;
+std::string commandStr;
+Command command;
+std::string result;
 
 int main()
 {
     seedRand(0);
-    Player player;
-    std::string commandStr;
-    const Room* room = &playMap.room(player.x, player.y);
-    std::cout << describeRoom(*room, player, APPEAR) << std::endl;
+    command.code = START;
+    result = executeCommand(command, player, room, gameMap);
+    std::cout << result << std::endl;
     while (true)
     {
+        std::cout << "> ";
         std::getline(std::cin, commandStr);
-        Command command = parseCommand(commandStr);
-        room = &playMap.room(player.x, player.y);
-        std::cout << describeRoom(*room, player, ENTER) << std::endl;
+        command = parseCommand(commandStr);
+        result = executeCommand(command, player, room, gameMap);
+        std::cout << result << std::endl;
     }
     return 0;
 }

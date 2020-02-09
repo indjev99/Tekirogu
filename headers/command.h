@@ -4,9 +4,10 @@
 #include <vector>
 
 #define UNKNOWN 0
-#define WALK 1 // relative? direction
-#define TURN 2 // relative? direction
-#define LOOK_AROUND 3
+#define START 1
+#define WALK 2 // relative direction
+#define TURN 3 // relative direction
+#define LOOK_AROUND 4
 
 struct Command
 {

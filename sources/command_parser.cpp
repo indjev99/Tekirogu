@@ -56,6 +56,12 @@ Command parseCommand(std::string commandStr)
                     state = DONE;
                 }
             }
+            if (command.code == TURN && aroundDirCW.match(word))
+            {
+                command.args.push_back(RELATIVE);
+                command.args.push_back(BACK);
+                state = DONE;
+            }
             break;
         case AROUND:
             if (aroundDirCW.match(word))

@@ -27,7 +27,7 @@ public:
     }
 };
 
-const std::vector<OnePattern> noDoors =  {
+const std::vector<OnePattern> zeroDoors =  {
     {"There aren't any doors."},
     {"There don't seem to be any doors."},
     {"You don't see any doors."},
@@ -63,19 +63,21 @@ const std::vector<OnePattern> threeDoors =  {
     {"You see three doors: ", ", ", " and ", "."}
 };
 const std::vector<OnePattern> fourDoors =  {
+    {"There are doors on all four walls."},
     {"There are doors ", ", ", ", ", " and ", "."},
     {"There is one door ", ", one ", ", one ", " and one ", "."},
     {"There are doors ", " and ", " as well as ", " and ", "."},
     {"There are four doors: ", ", ", ", ", " and ", "."},
+    {"You see doors on all four walls."},
     {"You see doors ", ", ", ", ", " and ", "."},
     {"You see one door ", ", one ", ", one ", " and one ", "."},
     {"You see doors ", " and ", " as well as ", " and ", "."},
     {"You see four doors: ", ", ", ", ", " and ", "."}
 };
 const std::vector<OnePattern> doors[] = {
-    noDoors, oneDoor, twoDoors, threeDoors, fourDoors
+    zeroDoors, oneDoor, twoDoors, threeDoors, fourDoors
 };
-const std::vector<std::vector<std::string>> dirNames = {
+const std::vector<std::vector<std::string>> doorDirNames = {
     {"in front of you", "to the left", "behind you", "to the right"},
     {"in front of you", "to your left", "behind you", "to your right"},
     {"in front of you", "on the left wall", "behind you", "on the right wall"},
@@ -108,12 +110,43 @@ const std::vector<OnePattern> appears[] = {
 const std::vector<OnePattern> blinds =  {
     {"You can't see anything."},
     {"You can't see anything in the darkness."},
-    {"You can't see anything around you."},
+    {"You can't see anything around you."}
+};
+const std::vector<OnePattern> unknownCmds =  {
+    {"What do you mean?"},
+    {"Can you rephrase that?"}
+};
+const std::vector<OnePattern> turns =  {
+    {"You turn ", "."}
+};
+const std::vector<std::string> turnDirNames[NUM_DIRS] = {
+    {"forward"},
+    {"left", "to the left"},
+    {"around"},
+    {"right", "to the right"}
+};
+const std::vector<OnePattern> unknownAbs =  {
+    {"You don't know where ", " is."},
+    {"You don't know which way ", " is."}
+};
+const std::string absDirNames[NUM_DIRS] = {
+    "North", "West", "South", "East"
+};
+const std::vector<OnePattern> noDoor =  {
+    {"There is no door ", "."},
+    {"There is no door there."}
 };
 
+struct UnknownCmdPat : Pattern
+{
+    std::string operator()(...) const override
+    {
+        return unknownCmds[randInt(unknownCmds.size())]({});
+    }
+};
 struct EnterPat : Pattern
 {
-    std::string operator()(...) override
+    std::string operator()(...) const override
     {
         va_list arguments;
         va_start(arguments, 0);
@@ -125,7 +158,7 @@ struct EnterPat : Pattern
 };
 struct AppearPat : Pattern
 {
-    std::string operator()(...) override
+    std::string operator()(...) const override
     {
         va_list arguments;
         va_start(arguments, 0);
@@ -137,7 +170,7 @@ struct AppearPat : Pattern
 };
 struct BlindPat : Pattern
 {
-    std::string operator()(...) override
+    std::string operator()(...) const override
     {
         return blinds[randInt(blinds.size())]({});
     }
@@ -149,7 +182,7 @@ bool dirCmp(int dir1, int dir2)
 }
 struct DoorsPat : Pattern
 {
-    std::string operator()(...) override
+    std::string operator()(...) const override
     {
         va_list arguments;
         va_start(arguments, 0);
@@ -157,19 +190,61 @@ struct DoorsPat : Pattern
         va_end(arguments);
         std::sort(doorDirs.begin(), doorDirs.end(), dirCmp);
         std::vector<std::string> words;
-        int setNum = randInt(dirNames.size());
+        int setNum = randInt(doorDirNames.size());
         for (int d : doorDirs)
         {
-            words.push_back(dirNames[setNum][d]);
+            words.push_back(doorDirNames[setNum][d]);
         }
         const std::vector<OnePattern>& ps = doors[doorDirs.size()];
         return ps[randInt(ps.size())](words);
     }
 };
+struct TurnPat : Pattern
+{
+    std::string operator()(...) const override
+    {
+        va_list arguments;
+        va_start(arguments, 0);
+        int dir = va_arg(arguments, int);
+        va_end(arguments);
+        const std::vector<OnePattern>& ps = turns;
+        std::string dirName = turnDirNames[dir][randInt(turnDirNames[dir].size())];
+        return ps[randInt(ps.size())]({dirName});
+    }
+};
+struct UnknownAbsPat : Pattern
+{
+    std::string operator()(...) const override
+    {
+        va_list arguments;
+        va_start(arguments, 0);
+        int dir = va_arg(arguments, int);
+        va_end(arguments);
+        const std::vector<OnePattern>& ps = unknownAbs;
+        return ps[randInt(ps.size())]({absDirNames[dir]});
+    }
+};
+struct NoDoorPat : Pattern
+{
+    std::string operator()(...) const override
+    {
+        va_list arguments;
+        va_start(arguments, 0);
+        int dir = va_arg(arguments, int);
+        va_end(arguments);
+        const std::vector<OnePattern>& ps = noDoor;
+        std::string dirName = doorDirNames[randInt(doorDirNames.size())][dir];
+        return ps[randInt(ps.size())]({dirName});
+    }
+};
 
-Pattern* enterPat = new EnterPat();
-Pattern* appearPat = new AppearPat();
-Pattern* blindPat = new BlindPat();
-Pattern* doorsPat = new DoorsPat();
+const Pattern* const unknownCmdPat = new UnknownCmdPat();
+const Pattern* const enterPat = new EnterPat();
+const Pattern* const appearPat = new AppearPat();
+const Pattern* const blindPat = new BlindPat();
+const Pattern* const doorsPat = new DoorsPat();
+const Pattern* const turnPat = new TurnPat();
+const Pattern* const unknownAbsPat = new UnknownAbsPat();
+const Pattern* const noDoorPat = new NoDoorPat();
 
 #endif // DICTIONARY_CPP_INCLUDED

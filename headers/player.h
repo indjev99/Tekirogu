@@ -5,6 +5,8 @@ struct Player
 {
     int x = 0, y = 0;
     int dir = 0;
+
+    bool compass = false;
 };
 
 #endif // PLAYER_H_INCLUDED

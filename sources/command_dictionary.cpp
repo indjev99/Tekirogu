@@ -27,9 +27,9 @@ extern const CommandWord lookCW = {"look"};
 
 extern const CommandWord aroundDirCW = {"around"};
 extern const CommandWord relDirCW[NUM_DIRS] = {
-    {"forward", "forwards", "ahead"},
+    {"forward", "forwards", "ahead", "front"},
     {"left", "leftward", "leftwards"},
-    {"back", "backward", "backwards"},
+    {"back", "backward", "backwards", "behind"},
     {"right", "rightward", "rightwards"}
 };
 extern const CommandWord absDirCW[NUM_DIRS] = {

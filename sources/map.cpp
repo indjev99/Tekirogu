@@ -93,7 +93,7 @@ void Map::addToMap(int& x, int& y, int& cx, int& cy, Chunk*& chunk)
     chunk = chunk0;
 }
 
-const Room& Map::room(int x, int y)
+Room& Map::room(int x, int y)
 {
     int cx, cy;
     Chunk* chunk;
@@ -123,7 +123,7 @@ static void moveBoth(int& x, int& fromX, int& toX)
     }
 }
 
-const Room& Map::distantRoom(int fromX, int fromY, int toX, int toY)
+Room& Map::distantRoom(int fromX, int fromY, int toX, int toY)
 {
     int x = fromX, y = fromY, cx, cy;
     Chunk* chunk;

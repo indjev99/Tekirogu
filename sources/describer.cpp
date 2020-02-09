@@ -2,6 +2,11 @@
 #include "../headers/dictionary.h"
 #include <vector>
 
+std::string describeUnknownCommand()
+{
+    return (*unknownCmdPat)();
+}
+
 std::string describeRoom(const Room& room, const Player& player, int enter)
 {
     std::string description = "";
@@ -31,4 +36,19 @@ std::string describeRoom(const Room& room, const Player& player, int enter)
         description += (*doorsPat)(doors);
     }
     return description;
+}
+
+std::string describeTurn(int dir)
+{
+    return (*turnPat)(dir);
+}
+
+std::string describeUnknownAbsolute(int dir)
+{
+    return (*unknownAbsPat)(dir);
+}
+
+std::string describeNoDoor(int dir)
+{
+    return (*noDoorPat)(dir);
 }

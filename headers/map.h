@@ -24,8 +24,8 @@ private:
 
 public:
     Map();
-    const Room& room(int x, int y);
-    const Room& distantRoom(int fromX, int fromY, int toX, int toY);
+    Room& room(int x, int y);
+    Room& distantRoom(int fromX, int fromY, int toX, int toY);
 };
 
 #endif // MAP_H_INCLUDED
