@@ -1,20 +1,21 @@
 #include "../headers/directions.h"
 
-int turnRight(int direction)
+int turn(int direction, int turnDirection)
 {
-    return (direction + 1) % NUM_DIRS;
+    return (direction + turnDirection) % NUM_DIRS;
 }
-
 int turnLeft(int direction)
 {
-    return (direction + 3) % NUM_DIRS;
+    return turn(direction, LEFT);
 }
-
+int turnRight(int direction)
+{
+    return turn(direction, RIGHT);
+}
 int turnBack(int direction)
 {
-    return (direction + 2) % NUM_DIRS;
+    return turn(direction, BACK);
 }
-
 void moveInDir(int direction, int& x, int &y)
 {
     switch (direction)

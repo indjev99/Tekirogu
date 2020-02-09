@@ -32,11 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="headers/describer.h" />
 		<Unit filename="headers/dictionary.h" />
 		<Unit filename="headers/directions.h" />
 		<Unit filename="headers/map.h" />
+		<Unit filename="headers/player.h" />
 		<Unit filename="headers/randomizer.h" />
 		<Unit filename="headers/room.h" />
+		<Unit filename="sources/describer.cpp" />
 		<Unit filename="sources/dictionary.cpp" />
 		<Unit filename="sources/directions.cpp" />
 		<Unit filename="sources/main.cpp" />

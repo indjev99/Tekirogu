@@ -2,7 +2,6 @@
 #define MAP_H_INCLUDED
 
 #include "room.h"
-
 #include <map>
 #include <utility>
 

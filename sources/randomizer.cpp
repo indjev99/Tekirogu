@@ -1,5 +1,4 @@
 #include "../headers/randomizer.h"
-
 #include <random>
 
 static std::default_random_engine generator;

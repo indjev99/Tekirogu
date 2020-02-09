@@ -2,8 +2,15 @@
 #define DICTIONARY_H_INCLUDED
 
 #include <string>
+#include <vector>
 
-extern const std::string absDirNames[4];
-extern const std::string relDirNames[4];
+struct Pattern
+{
+    virtual std::string operator()(...) = 0;
+};
+
+extern Pattern* enterPat;
+extern Pattern* blindPat;
+extern Pattern* doorsPat;
 
 #endif // DICTIONARY_H_INCLUDED
