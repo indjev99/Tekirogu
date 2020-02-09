@@ -7,7 +7,6 @@ void seedRand(int seed)
 {
     generator.seed(seed);
 }
-
 int randInt(int upb)
 {
     std::uniform_int_distribution<int> distribution(0, upb - 1);

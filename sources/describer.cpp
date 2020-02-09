@@ -2,7 +2,7 @@
 #include "../headers/dictionary.h"
 #include <vector>
 
-std::string describeRoom(const Room& room, const Player& player, bool enter)
+std::string describeRoom(const Room& room, const Player& player, int enter)
 {
     std::string description = "";
     std::vector<int> doors;
@@ -12,7 +12,15 @@ std::string describeRoom(const Room& room, const Player& player, bool enter)
     }
     if (enter)
     {
-        description += (*enterPat)(room.light) + " ";
+        switch (enter)
+        {
+        case ENTER:
+            description += (*enterPat)(room.light) + " ";
+            break;
+        case APPEAR:
+            description += (*appearPat)(room.light) + " ";
+            break;
+        }
     }
     if (!room.light)
     {

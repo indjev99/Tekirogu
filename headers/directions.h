@@ -13,6 +13,9 @@
 #define BACK 2
 #define RIGHT 3
 
+#define ABSOLUTE 0
+#define RELATIVE 1
+
 int turn(int direction, int turnDirection);
 int turnLeft(int direction);
 int turnRight(int direction);

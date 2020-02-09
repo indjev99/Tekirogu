@@ -32,6 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="headers/command.h" />
+		<Unit filename="headers/command_dictionary.h" />
+		<Unit filename="headers/command_parser.h" />
 		<Unit filename="headers/describer.h" />
 		<Unit filename="headers/dictionary.h" />
 		<Unit filename="headers/directions.h" />
@@ -39,6 +42,8 @@
 		<Unit filename="headers/player.h" />
 		<Unit filename="headers/randomizer.h" />
 		<Unit filename="headers/room.h" />
+		<Unit filename="sources/command_dictionary.cpp" />
+		<Unit filename="sources/command_parser.cpp" />
 		<Unit filename="sources/describer.cpp" />
 		<Unit filename="sources/dictionary.cpp" />
 		<Unit filename="sources/directions.cpp" />

@@ -8,15 +8,14 @@
 #include <algorithm>
 #include <stdarg.h>
 
-const std::string absDirNames[NUM_DIRS] = {"North", "West", "South", "East"};
-const std::string relDirNames[NUM_DIRS] = {"forward", "left", "back", "right"};
-
 struct OnePattern
 {
+private:
     std::vector<std::string> parts;
+public:
     OnePattern(const std::initializer_list<std::string>& parts):
         parts(parts) {}
-    std::string operator()(std::vector<std::string> words) const
+    std::string operator()(const std::vector<std::string>& words) const
     {
         std::string result = parts[0];
         for (size_t i = 1; i < parts.size(); ++i)
@@ -97,6 +96,15 @@ const std::vector<OnePattern> darkEnter =  {
 const std::vector<OnePattern> enters[] = {
     darkEnter, lightEnter
 };
+const std::vector<OnePattern> lightAppear =  {
+    {"You are in a room."}
+};
+const std::vector<OnePattern> darkAppear =  {
+    {"You are in a dark room."}
+};
+const std::vector<OnePattern> appears[] = {
+    darkAppear, lightAppear
+};
 const std::vector<OnePattern> blinds =  {
     {"You can't see anything."},
     {"You can't see anything in the darkness."},
@@ -112,6 +120,18 @@ struct EnterPat : Pattern
         int light = va_arg(arguments, int);
         va_end(arguments);
         const std::vector<OnePattern>& ps = enters[light];
+        return ps[randInt(ps.size())]({});
+    }
+};
+struct AppearPat : Pattern
+{
+    std::string operator()(...) override
+    {
+        va_list arguments;
+        va_start(arguments, 0);
+        int light = va_arg(arguments, int);
+        va_end(arguments);
+        const std::vector<OnePattern>& ps = appears[light];
         return ps[randInt(ps.size())]({});
     }
 };
@@ -148,6 +168,7 @@ struct DoorsPat : Pattern
 };
 
 Pattern* enterPat = new EnterPat();
+Pattern* appearPat = new AppearPat();
 Pattern* blindPat = new BlindPat();
 Pattern* doorsPat = new DoorsPat();
 

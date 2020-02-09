@@ -1,11 +1,10 @@
 #include <iostream>
 
 #include "../headers/map.h"
-#include "../headers/dictionary.h"
-#include "../headers/directions.h"
-#include "../headers/randomizer.h"
 #include "../headers/player.h"
 #include "../headers/describer.h"
+#include "../headers/command_parser.h"
+#include "../headers/randomizer.h"
 
 Map playMap;
 
@@ -13,13 +12,15 @@ int main()
 {
     seedRand(0);
     Player player;
-    std::string command;
+    std::string commandStr;
+    const Room* room = &playMap.room(player.x, player.y);
+    std::cout << describeRoom(*room, player, APPEAR) << std::endl;
     while (true)
     {
-        const Room& room = playMap.room(player.x, player.y);
-        std::cout << describeRoom(room, player) << std::endl;
-        //std::getline(std::cin, command);
-        std::cin >> player.x >> player.y >> player.dir;
+        std::getline(std::cin, commandStr);
+        Command command = parseCommand(commandStr);
+        room = &playMap.room(player.x, player.y);
+        std::cout << describeRoom(*room, player, ENTER) << std::endl;
     }
     return 0;
 }

@@ -5,7 +5,6 @@
 
 struct Room
 {
-public:
     bool generated = false;
     int dirToSource = -1;
     int doors[NUM_DIRS] = {0, 0, 0, 0};
